@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geny Hamud - Terminal Portfolio</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #0f0;
+            overflow: hidden;
+        }
+        #terminal {
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        #output {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            flex-grow: 1;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+        #input-line {
+            display: flex;
+            align-items: center;
+            padding-top: 10px;
+        }
+        #prompt {
+            margin-right: 10px;
+        }
+        #user-input {
+            background-color: transparent;
+            border: none;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            flex-grow: 1;
+            outline: none;
+            caret-color: #0f0;
+            caret-shape: block;
+        }
+        #user-input::selection {
+            background-color: #0f0;
+            color: #000;
+        }
+        a {
+            color: #0f0;
+            text-decoration: underline;
+        }
+        a:hover {
+            color: #0ff;
+        }
+        .ascii-art {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .ascii-art {
+                display: none;
+            }
+            #terminal {
+                padding: 10px;
+            }
+            #output, #user-input {
+                font-size: 12px;
+            }
+        }
+        @media (min-width: 1200px) {
+            #terminal {
+                padding: 30px;
+            }
+            #output, #user-input {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <div id="output"></div>
+        <div id="input-line">
+            <span id="prompt">$</span>
+            <input type="text" id="user-input" autofocus>
+        </div>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const output = document.getElementById('output');
+        const userInput = document.getElementById('user-input');
+
+        const asciiArt = `<span class="ascii-art">:'######:::'########:'##::: ##:'##:::'##::::'##::::'##::::'###::::'##::::'##:'##::::'##:'########::
+'##... ##:: ##.....:: ###:: ##:. ##:'##::::: ##:::: ##:::'## ##::: ###::'###: ##:::: ##: ##.... ##:
+ ##:::..::: ##::::::: ####: ##::. ####:::::: ##:::: ##::'##:. ##:: ####'####: ##:::: ##: ##:::: ##:
+ ##::'####: ######::: ## ## ##:::. ##::::::: #########:'##:::. ##: ## ### ##: ##:::: ##: ##:::: ##:
+ ##::: ##:: ##...:::: ##. ####:::: ##::::::: ##.... ##: #########: ##. #: ##: ##:::: ##: ##:::: ##:
+ ##::: ##:: ##::::::: ##:. ###:::: ##::::::: ##:::: ##: ##.... ##: ##:.:: ##: ##:::: ##: ##:::: ##:
+. ######::: ########: ##::. ##:::: ##::::::: ##:::: ##: ##:::: ##: ##:::: ##:. #######:: ########::
+:......::::........::..::::..:::::..::::::::..:::::..::..:::::..::..:::::..:::.......:::........:::</span>`;
+
+        const initialContent = `${asciiArt}
+
+Welcome to Geny Hamud's Terminal Portfolio
+Type 'help' to see available commands.
+`;
+
+        const commands = {
+            help: `Available commands:
+    about      - Learn more about me
+    education  - View my educational background
+    experience - See my work experience
+    contact    - Get my contact information
+    clear      - Clear the terminal screen`,
+            about: `As an Engineering Manager at TOTVS Labs, I lead the development and management of the Carol Platform, a Big Data and Artificial Intelligence solution that empowers businesses to innovate and thrive in a competitive landscape. With over 15+ years of experience in software development and architecture, I possess a robust background in designing scalable systems and leveraging advanced technologies.
+
+I am committed to delivering high-quality solutions that align with client needs and industry best practices. Collaborating closely with cross-functional teams, stakeholders, and partners, I help define requirements, prioritize features, and ensure successful project execution. Additionally, I mentor and support my engineering team, fostering a culture of continuous improvement and innovation.
+
+Passionate about the transformative potential of data and AI, I strive create impactful solutions that enhance operational efficiency and drive business success and my goal is to harness the power of technology to create impactful solutions that enhance operational efficiency and customer satisfaction.`,
+            education: `- Bachelor's in Information Technology (GPA 3.75), Universidade Federal do Paraná, 2008
+- Post-Graduation in Software Engineering (GPA 3.60), SENAI/SC - Serviço Nacional de Aprendizagem Industrial, 2010`,
+            experience: `- Senior Back Engineer - Manager at TOTVS Labs, 2018 - Present
+    * Engineered and implemented key architecture solutions during a major cloud provider migration, ensuring seamless transitions and minimal downtime.
+    * Led platform scaling efforts, expanding customer base from 50+ to over 3,200 customers through robust backend solutions and architectural improvements.
+    * Oversaw cross-functional teams to optimize system performance, improve platform reliability, and manage high-scale operations.
+    * Drove innovation and process improvements, aligning engineering strategies with business goals to support rapid growth.
+    * Managed team development and performance, fostering a collaborative and high-performing engineering culture.
+    * Ensured system resilience and scalability, integrating best practices for DevOps, CI/CD pipelines, and cloud infrastructure.
+    * Provided technical leadership and mentorship to both junior and senior engineers, guiding complex problem-solving and project execution.
+    * Led risk management and mitigation efforts, ensuring the security and stability of the platform throughout periods of rapid growth.\n\n
+- Senior Software Engineer at Tracfone Wireless, 2015 - 2018
+    * Developed and maintained Java-based backend services and JSF front-end for an internal platform deployed on WebSphere Application Server.
+    * Designed RESTful APIs and managed deployments, optimizing performance and reliability through automated CI/CD pipelines.
+    * Performed SRE tasks, including monitoring, incident management, and system optimization for scalability and availability.
+    * Collaborated with cross-functional teams to deliver integrated solutions and ensure system security, compliance, and high availability.\n\n
+- Professor - Software Engineering at Católica SC - Centro Universitário, 2014 - 2015
+    * Taught a variety of disciplines focused on foundational and advanced software engineering concepts, including:
+    * Java Programming: From basic to advanced, covering object-oriented principles such as inheritance, polymorphism, and encapsulation.
+    * Software Engineering: Software development lifecycle, Agile methodologies, and design using UML diagrams, Web Services, RESTful APIs and service-oriented architecture.
+    * Introduction to Computing: History of software development and early computing systems.`,
+            contact: `Email: <a href="mailto:genyihamud@gmail.com">genyihamud@gmail.com</a>
+GitHub: <a href="https://github.com/genyhamud" target="_blank">github.com/genyhamud</a>
+LinkedIn: <a href="https://www.linkedin.com/in/genyhamud" target="_blank">linkedin.com/in/genyhamud</a>`
+        };
+
+        function handleCommand(cmd) {
+            cmd = cmd.toLowerCase().trim();
+            let response = '';
+            if (cmd === 'clear') {
+                output.innerHTML = initialContent;
+            } else if (commands.hasOwnProperty(cmd)) {
+                response = commands[cmd];
+            } else {
+                response = 'Command not found. Type "help" for available commands.';
+            }
+            
+            if (response) {
+                output.innerHTML += `\n$ ${cmd}\n\n${response}\n\n`;
+            }
+            
+            // Scroll to the bottom
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function fetchIPInfo() {
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    const ipInfo = `Your IP: ${data.ip}\nLocation: ${data.city}, ${data.region}, ${data.country_name}`;
+                    output.innerHTML = `${asciiArt}\n\n${ipInfo}\n\nWelcome to Geny Hamud's Terminal Portfolio\nType 'help' to see available commands.`;
+                })
+                .catch(error => {
+                    console.error('Error fetching IP info:', error);
+                    output.innerHTML = `${asciiArt}\n\nUnable to fetch IP and location information.\n\nWelcome to Geny Hamud's Terminal Portfolio\nType 'help' to see available commands.`;
+                });
+        }
+
+        // Handle enter event on input
+        userInput.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                const cmd = userInput.value;
+                handleCommand(cmd);
+                userInput.value = '';
+            }
+        });
+
+        // Keep focus on input
+        terminal.addEventListener('click', function(event) {
+            userInput.focus();
+        });
+
+        // Initialize with IP info
+        fetchIPInfo();
+
+        // Initial focus
+        userInput.focus();
+    </script>
+</body>
+</html>
