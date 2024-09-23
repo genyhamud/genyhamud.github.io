@@ -28,11 +28,18 @@
             flex-grow: 1;
             overflow-y: auto;
             font-size: 14px;
+            padding-bottom: 60px; /* Add space for input on mobile */
         }
         #input-line {
             display: flex;
             align-items: center;
             padding-top: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #000;
+            padding: 10px;
         }
         #prompt {
             margin-right: 10px;
@@ -61,16 +68,26 @@
         }
         .ascii-art {
             display: block;
+            font-size: 10px;
+            line-height: 1.2;
+            overflow-x: auto;
+            white-space: pre;
         }
         @media (max-width: 768px) {
-            .ascii-art {
-                display: none;
+            body, html {
+                height: auto;
+                overflow: auto;
             }
             #terminal {
+                height: auto;
+                min-height: 100vh;
                 padding: 10px;
             }
             #output, #user-input {
                 font-size: 12px;
+            }
+            .ascii-art {
+                font-size: 6px;
             }
         }
         @media (min-width: 1200px) {
